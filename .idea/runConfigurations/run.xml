@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="boltdbwebeditor" />
+    <working_directory value="$PROJECT_DIR$/build" />
+    <go_parameters value="-o $PROJECT_DIR$/build/boltdbwebeditor" />
+    <kind value="DIRECTORY" />
+    <directory value="$PROJECT_DIR$/src/cli" />
+    <filePath value="$PROJECT_DIR$" />
+    <output_directory value="$PROJECT_DIR$/build" />
+    <method v="2" />
+  </configuration>
+</component>
