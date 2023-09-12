@@ -1,0 +1,14 @@
+.jse-main {
+  height: 100vh !important;
+}
+
+.jse-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jse-modal-window {
+  width: 98% !important;
+  max-height: 90% !important;
+}

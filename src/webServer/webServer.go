@@ -10,7 +10,7 @@ import (
 func Start() {
 	router := gin.Default()
 
-	router.GET("/api/all", func(c *gin.Context) {
+	router.GET("/api/db", func(c *gin.Context) {
 		all, err := boltdb.ExportJSON("./portainer.db", false)
 
 		if err != nil {
@@ -20,5 +20,16 @@ func Start() {
 		c.PureJSON(http.StatusOK, all)
 	})
 
+	router.POST("/api/db", func(c *gin.Context) {
+		var data map[string]interface{}
+		err := c.BindJSON(&data)
+		if err != nil {
+			c.Error(err)
+		}
+
+		c.PureJSON(http.StatusOK, data)
+	})
+
+	// listen on :8080
 	router.Run()
 }
