@@ -25,11 +25,8 @@ export const renderMenuFactory = ({getData, postData, editor}) => (items, contex
         },
     }
 
-    window.console.log("items = ", items)
     // pop space item
-    // items[1].className += " jse-last"
-    // items.splice(2,1)
-    // items.pop();
+    items.pop();
 
     return [...items, separator, downloadButton, uploadButton]
 }
