@@ -27,6 +27,11 @@ func Start() {
 			c.Error(err)
 		}
 
+		err = boltdb.ExportJSON("./portainer.db", data, false)
+		if err != nil {
+			c.Error(err)
+		}
+
 		c.PureJSON(http.StatusOK, data)
 	})
 
