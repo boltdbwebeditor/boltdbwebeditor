@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { JSONEditor } from 'vanilla-jsoneditor'
 
-export const VanillaJsonEditor = ({refEditor, ...props}) => {
+export const VanillaJsonEditor = ({refEditor, Id, ...props}) => {
     const refContainer = useRef(null)
 
     useEffect(() => {
@@ -27,5 +27,5 @@ export const VanillaJsonEditor = ({refEditor, ...props}) => {
         }
     }, [props])
 
-    return <div ref={refContainer} />
+    return <div class="jse-column" ref={refContainer} />
 }

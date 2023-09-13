@@ -1,8 +1,8 @@
-import {JsonEditor} from "./JsonEditor/JsonEditor.jsx";
+import {JsonEditorManager} from "./JsonEditorManager/JsonEditorManager";
 
 function App() {
   return (
-      <JsonEditor/>
+      <JsonEditorManager/>
   );
 }
 

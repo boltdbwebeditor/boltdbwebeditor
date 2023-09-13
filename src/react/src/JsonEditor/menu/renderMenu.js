@@ -1,7 +1,7 @@
-import {faDownload, faUpload} from "assets/icons";
+import {faClose, faDownload, faPlus, faUpload} from "assets/icons";
 import {toJSONContent} from "vanilla-jsoneditor";
 
-export const renderMenuFactory = ({getData, postData, editor}) => (items, context) => {
+export const renderMenuFactory = ({getData, postData, Id, newEditor, closeEditor, editor}) => (items, context) => {
     const separator = {type: 'separator'}
 
     const downloadButton = {
@@ -25,8 +25,26 @@ export const renderMenuFactory = ({getData, postData, editor}) => (items, contex
         },
     }
 
+    const newEditorButton = {
+        type: "button",
+        icon: faPlus,
+        title: "New Editor",
+        onClick: () => {
+            newEditor(Id)
+        },
+    }
+
+    const closeEditorButton = {
+        type: "button",
+        icon: faClose,
+        title: "Close Editor",
+        onClick: () => {
+            closeEditor(Id)
+        },
+    }
+
     // pop space item
     items.pop();
 
-    return [...items, separator, downloadButton, uploadButton]
+    return [...items, separator, downloadButton, uploadButton, separator, newEditorButton, closeEditorButton]
 }

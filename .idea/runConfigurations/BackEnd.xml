@@ -4,6 +4,7 @@
     <working_directory value="$PROJECT_DIR$/build" />
     <go_parameters value="-o $PROJECT_DIR$/build/boltdbwebeditor" />
     <kind value="DIRECTORY" />
+    <package value="github.com/boltdbwebeditor/boltdbwebeditor/build" />
     <directory value="$PROJECT_DIR$/src/cli" />
     <filePath value="$PROJECT_DIR$" />
     <output_directory value="$PROJECT_DIR$/build" />

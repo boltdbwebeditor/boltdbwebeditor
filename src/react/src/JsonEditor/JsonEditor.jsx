@@ -1,26 +1,32 @@
+import {useCallback, useRef} from "react";
+
 import {VanillaJsonEditor} from "./VanillaJsonEditor/VanillaJsonEditor";
 import {useData} from "./hooks/useData";
 import {renderMenuFactory} from "./menu/renderMenu";
 
 import "./css/override-jse.css";
-import {useRef} from "react";
 
-export function JsonEditor() {
+export function JsonEditor({Id, newEditor, closeEditor}) {
     const refEditor = useRef(null)
 
-    const [data, getData, postData] = useData()
+    const {data, setData, getData, postData} = useData()
 
     const onRenderMenu = renderMenuFactory({
         getData,
         postData,
+        Id,
+        newEditor,
+        closeEditor,
         editor: refEditor.current
     })
 
+    const onChange = useCallback(
+        (updatedContent, previousContent, { contentErrors, patchResult }) => {
+            setData(updatedContent)
+        }, []
+    )
+
     return (
-        <VanillaJsonEditor
-            refEditor={refEditor}
-            content={{json: data}}
-            onRenderMenu={onRenderMenu}
-        />
+        <VanillaJsonEditor {...{Id, refEditor, content: data, onChange, onRenderMenu}} />
     );
 }

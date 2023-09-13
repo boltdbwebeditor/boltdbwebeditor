@@ -7,9 +7,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*#root {*/
-/*  height: 100vh;*/
-/*}*/
+#root {
+  display: flex;
+}
+
+.jse-column {
+  flex-grow: 1;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
