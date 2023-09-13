@@ -43,8 +43,5 @@ export const renderMenuFactory = ({getData, postData, Id, newEditor, closeEditor
         },
     }
 
-    // pop space item
-    items.pop();
-
-    return [...items, separator, downloadButton, uploadButton, separator, newEditorButton, closeEditorButton]
+    return [newEditorButton, closeEditorButton, separator, downloadButton, uploadButton, separator, ...items]
 }
