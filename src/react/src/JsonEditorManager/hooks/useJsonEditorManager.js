@@ -2,14 +2,17 @@ import {useCallback, useState} from "react";
 
 const MAX_EDITORS = 3
 
-function getNewEditor(Id) {
-    return {
-        Id
-    }
+let currentId = 0;
+
+function getNextEditorId() {
+    return ++currentId;
 }
 
-function getNextEditorId(editorList) {
-    return editorList.length + 1
+function getNewEditor() {
+    const nextId = getNextEditorId()
+    return {
+        Id: nextId
+    }
 }
 
 function editorListInsert(editorList, Id, newEditor) {
@@ -35,12 +38,11 @@ function editorListRemove(editorList, Id) {
 }
 
 export function useJsonEditorManager() {
-    const [editorList, setEditorList] = useState([getNewEditor(1)])
+    const [editorList, setEditorList] = useState([getNewEditor()])
 
     const newEditorCb = useCallback((Id) => {
         if (editorList.length < MAX_EDITORS) {
-            const nextId = getNextEditorId(editorList)
-            const newEditor = getNewEditor(nextId)
+            const newEditor = getNewEditor()
             const newEditorList = editorListInsert(editorList, Id, newEditor)
 
             setEditorList(newEditorList)
