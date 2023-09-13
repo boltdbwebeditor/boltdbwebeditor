@@ -11,7 +11,7 @@ func Start() {
 	router := gin.Default()
 
 	router.GET("/api/db", func(c *gin.Context) {
-		all, err := boltdb.ExportJSON("./portainer.db", false)
+		all, err := boltdb.ImportJSON("./portainer.db", false)
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
