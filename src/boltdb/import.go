@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"regexp"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/pkg/errors"
@@ -84,7 +83,7 @@ func ImportJSON(dbPath string, metadata bool) (backup map[string]interface{}, er
 					obj = v
 				}
 
-				log.Debug().Str("bucket", bucketName).Msgf("%v, after sanitize: %v", k, extractObjectKey(k))
+				// log.Debug().Str("bucket", bucketName).Msgf("%v, after sanitize: %v", k, extractObjectKey(k))
 				if bucketName == "version" {
 					version[string(k)] = string(v)
 				} else {
@@ -97,17 +96,6 @@ func ImportJSON(dbPath string, metadata bool) (backup map[string]interface{}, er
 				return nil
 			}
 
-			if bucketName == "ssl" ||
-				bucketName == "settings" ||
-				bucketName == "tunnel_server" {
-				backup[bucketName] = nil
-				if len(list) > 0 {
-					for key, value := range list {
-						backup[key] = value
-					}
-				}
-				return nil
-			}
 			backup[bucketName] = list
 			return nil
 		})
@@ -115,7 +103,7 @@ func ImportJSON(dbPath string, metadata bool) (backup map[string]interface{}, er
 		return err
 	})
 
-	return
+	return backup, err
 }
 
 func UnmarshalObject(data []byte, object interface{}) error {
@@ -148,5 +136,5 @@ func extractObjectKey(key []byte) string {
 	if len(s) == 0 {
 		s = string(key)
 	}
-	return strings.ToLower(s)
+	return s
 }
