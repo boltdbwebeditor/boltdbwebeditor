@@ -13,6 +13,8 @@ export function JsonEditor({Id, newEditor, closeEditor, onShowFileUploader, onCl
 
      const onRenderMenu = renderMenuFactory({
         getData,
+        postData,
+        onShowFileUploader,
         onShowFileUploader,
         Id,
         newEditor,
