@@ -14,6 +14,8 @@ func Start() {
 
 	router.POST("/api/db/upload", handlers.UploadDBFile)
 
+	router.GET("/api/db/download", handlers.DownloadDBFile)
+
 	// listen on :8080
 	router.Run()
 }
