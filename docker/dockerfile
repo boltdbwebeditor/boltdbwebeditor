@@ -1,8 +1,12 @@
-FROM alpine:3.18.3
+FROM --platform=$TARGETPLATFORM alpine:3.18.3
 
-COPY app /app
+ARG TARGETOS
+ARG TARGETARCH
+#ARG TARGETPLATFORM
+
+COPY app/boltdbwebeditor.$TARGETOS.$TARGETARCH /app/boltdbwebeditor
+COPY app/static /app/static
 
 EXPOSE 8080
 
 ENTRYPOINT ["/app/boltdbwebeditor"]
-
