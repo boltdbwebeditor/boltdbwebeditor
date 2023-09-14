@@ -27,5 +27,5 @@ export const VanillaJsonEditor = ({refEditor, Id, ...props}) => {
         }
     }, [props])
 
-    return <div class="jse-column" ref={refContainer} />
+    return <div className="jse-column" ref={refContainer} />
 }

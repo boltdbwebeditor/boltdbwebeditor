@@ -1,4 +1,4 @@
-import {useCallback, useRef} from "react";
+import {useCallback, useRef } from "react";
 
 import {VanillaJsonEditor} from "./VanillaJsonEditor/VanillaJsonEditor";
 import {useData} from "./hooks/useData";
@@ -6,14 +6,14 @@ import {renderMenuFactory} from "./menu/renderMenu";
 
 import "./css/override-jse.css";
 
-export function JsonEditor({Id, newEditor, closeEditor}) {
+export function JsonEditor({Id, newEditor, closeEditor, onShowFileUploader, onCloseFileUploader}) {
     const refEditor = useRef(null)
 
     const {data, setData, getData, postData} = useData()
 
-    const onRenderMenu = renderMenuFactory({
+     const onRenderMenu = renderMenuFactory({
         getData,
-        postData,
+        onShowFileUploader,
         Id,
         newEditor,
         closeEditor,
@@ -26,7 +26,5 @@ export function JsonEditor({Id, newEditor, closeEditor}) {
         }, []
     )
 
-    return (
-        <VanillaJsonEditor {...{Id, refEditor, content: data, onChange, onRenderMenu}} />
-    );
+    return <VanillaJsonEditor {...{Id, refEditor, content: data, onChange, onRenderMenu}} />;
 }

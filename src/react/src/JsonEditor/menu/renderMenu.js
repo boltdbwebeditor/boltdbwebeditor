@@ -1,7 +1,6 @@
 import {faClose, faDownload, faPlus, faUpload} from "assets/icons";
-import {toJSONContent} from "vanilla-jsoneditor";
 
-export const renderMenuFactory = ({getData, postData, Id, newEditor, closeEditor, editor}) => (items, context) => {
+export const renderMenuFactory = ({getData, onShowFileUploader, Id, newEditor, closeEditor, editor}) => (items, context) => {
     const separator = {type: 'separator'}
 
     const downloadButton = {
@@ -15,14 +14,7 @@ export const renderMenuFactory = ({getData, postData, Id, newEditor, closeEditor
         type: "button",
         icon: faUpload,
         title: "Upload",
-        onClick: () => {
-            try {
-                const isValid = editor.validate() === null
-                const data = toJSONContent(editor.get()).json
-                postData(data)
-            } catch {
-            }
-        },
+        onClick: () => onShowFileUploader(),
     }
 
     const newEditorButton = {
