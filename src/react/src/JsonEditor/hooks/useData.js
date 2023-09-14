@@ -3,7 +3,7 @@ import {useCallback, useEffect, useState} from "react";
 import {restGetDb, restPostDb} from "rests/db";
 
 export function useData() {
-    const [data, setData] = useState({})
+    const [data, setData] = useState({json: {}})
 
     const getData = useCallback(async () => {
         const jsonData = await restGetDb()

@@ -2,3 +2,4 @@
 *.db
 *.bak
 yarn.lock
+/docker/app/
