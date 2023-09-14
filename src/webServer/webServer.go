@@ -4,11 +4,14 @@ import (
 	"net/http"
 
 	"github.com/boltdbwebeditor/boltdbwebeditor/src/boltdb"
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
 func Start() {
 	router := gin.Default()
+
+	router.Use(static.Serve("/", static.LocalFile("/app/static", false)))
 
 	router.GET("/api/db", func(c *gin.Context) {
 		all, err := boltdb.ImportJSON("./portainer.db", false)
@@ -35,6 +38,5 @@ func Start() {
 		c.PureJSON(http.StatusOK, data)
 	})
 
-	// listen on :8080
-	router.Run()
+	router.Run(":8080")
 }
