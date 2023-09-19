@@ -1,24 +1,28 @@
 package boltdb
 
 import (
-	"encoding/json"
+	"github.com/boltdbwebeditor/boltdbwebeditor/src/boltdb/helpers"
 	"github.com/rs/zerolog/log"
 	bolt "go.etcd.io/bbolt"
 )
 
-func ExportJSON(dbPath string, data map[string]interface{}) error {
+func Create(dbPath string, data map[string]interface{}) (err error) {
+	log.Debug().
+		Str("dbPath", dbPath).
+		Msg("create database")
+
 	db, err := bolt.Open(dbPath, 0600, nil)
 	if err != nil {
-		return err
+		return
 	}
 
 	defer db.Close()
 
-	err = db.Update(func(tx *bolt.Tx) error {
+	err = db.Update(func(tx *bolt.Tx) (err error) {
 		for bucketName, bucketData := range data {
 			b, err := tx.CreateBucketIfNotExists([]byte(bucketName))
 			if err != nil {
-				return err
+				return
 			}
 
 			log.Debug().Msgf("bucket name: %s", bucketName)
@@ -29,27 +33,19 @@ func ExportJSON(dbPath string, data map[string]interface{}) error {
 			}
 
 			for key, value := range bucketData.(map[string]interface{}) {
-				v, err := MarshalObject(value)
+				v, err := helpers.MarshalObject(value)
 				if err != nil {
-					return err
+					return
 				}
 
 				err = b.Put([]byte(key), v)
 				if err != nil {
-					return err
+					return
 				}
 			}
 		}
-		return nil
+		return
 	})
 
-	return err
-}
-
-func MarshalObject(data interface{}) ([]byte, error) {
-	if data == nil {
-		return []byte(""), nil
-	}
-
-	return json.Marshal(data)
+	return
 }

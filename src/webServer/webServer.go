@@ -21,7 +21,7 @@ func Start() {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		}
 
-		all, err := boltdb.ImportJSON(tempDbPath, true)
+		all, err := boltdb.Read(tempDbPath, true)
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
@@ -39,7 +39,7 @@ func Start() {
 
 		tempDbPath := helpers.GenerateDbTmpFilePath()
 
-		err = boltdb.ExportJSON(tempDbPath, data)
+		err = boltdb.Create(tempDbPath, data)
 		if err != nil {
 			c.Error(err)
 		}
