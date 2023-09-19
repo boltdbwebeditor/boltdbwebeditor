@@ -1,10 +1,7 @@
 package boltdb
 
 import (
-	"encoding/binary"
 	"encoding/json"
-	"regexp"
-	"strconv"
 	"time"
 
 	"github.com/pkg/errors"
@@ -82,13 +79,8 @@ func ImportJSON(dbPath string, metadata bool) (backup map[string]interface{}, er
 					obj = v
 				}
 
-				list[extractObjectKey(k)] = obj
+				list[string(k)] = obj
 			}
-
-			//if bucketName == "version" {
-			//	backup[bucketName] = version
-			//	return nil
-			//}
 
 			backup[bucketName] = list
 			return nil
@@ -115,20 +107,4 @@ func UnmarshalObject(data []byte, object interface{}) error {
 		*s = string(data)
 	}
 	return err
-}
-
-var invalid = regexp.MustCompile(`[^0-9a-zA-Z]+`)
-
-func extractObjectKey(key []byte) string {
-	s := string(invalid.ReplaceAll(key, []byte("")))
-	if len(s) == 0 && len(key) == 8 {
-		// Attempt to parse name as an unsigned int instead.
-		i := int(binary.BigEndian.Uint64(key))
-		s = strconv.Itoa(i)
-	}
-
-	if len(s) == 0 {
-		s = string(key)
-	}
-	return s
 }
