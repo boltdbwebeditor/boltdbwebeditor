@@ -12,7 +12,7 @@ body {
 }
 
 .jse-column {
-  flex-grow: 1;
+  flex: 1;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
