@@ -2,20 +2,11 @@ package boltdb
 
 import (
 	"encoding/json"
-	"errors"
-	"os"
-
 	"github.com/rs/zerolog/log"
 	bolt "go.etcd.io/bbolt"
 )
 
-func ExportJSON(dbPath string, data map[string]interface{}, metadata bool) error {
-
-	err := os.Rename(dbPath, dbPath+".bak")
-	if err != nil && !errors.Is(err, os.ErrNotExist) {
-		return errors.New("failed to rename db file")
-	}
-
+func ExportJSON(dbPath string, data map[string]interface{}) error {
 	db, err := bolt.Open(dbPath, 0600, nil)
 	if err != nil {
 		return err
@@ -24,7 +15,6 @@ func ExportJSON(dbPath string, data map[string]interface{}, metadata bool) error
 	defer db.Close()
 
 	err = db.Update(func(tx *bolt.Tx) error {
-
 		for bucketName, bucketData := range data {
 			b, err := tx.CreateBucketIfNotExists([]byte(bucketName))
 			if err != nil {
@@ -53,18 +43,7 @@ func ExportJSON(dbPath string, data map[string]interface{}, metadata bool) error
 		return nil
 	})
 
-	if err != nil {
-		// restore backup
-		log.Info().Err(err).Msg("failed to update db, restoring backup")
-		os.Rename(dbPath+".bak", dbPath)
-	}
-
-	err = os.Remove(dbPath + ".bak")
-	if err != nil {
-		log.Info().Err(err).Msg("failed to remove backup")
-	}
-
-	return nil
+	return err
 }
 
 func MarshalObject(data interface{}) ([]byte, error) {
@@ -72,11 +51,5 @@ func MarshalObject(data interface{}) ([]byte, error) {
 		return []byte(""), nil
 	}
 
-	ret, err := json.Marshal(data)
-	if err != nil {
-		return nil, err
-	}
-
-	return ret, nil
-
+	return json.Marshal(data)
 }

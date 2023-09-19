@@ -60,7 +60,6 @@ func ImportJSON(dbPath string, metadata bool) (backup map[string]interface{}, er
 	err = conn.View(func(tx *bolt.Tx) error {
 		err = tx.ForEach(func(name []byte, bucket *bolt.Bucket) error {
 			bucketName := string(name)
-			version := make(map[string]string)
 			cursor := bucket.Cursor()
 
 			length := bucket.Stats().KeyN
@@ -83,18 +82,13 @@ func ImportJSON(dbPath string, metadata bool) (backup map[string]interface{}, er
 					obj = v
 				}
 
-				// log.Debug().Str("bucket", bucketName).Msgf("%v, after sanitize: %v", k, extractObjectKey(k))
-				if bucketName == "version" {
-					version[string(k)] = string(v)
-				} else {
-					list[extractObjectKey(k)] = obj
-				}
+				list[extractObjectKey(k)] = obj
 			}
 
-			if bucketName == "version" {
-				backup[bucketName] = version
-				return nil
-			}
+			//if bucketName == "version" {
+			//	backup[bucketName] = version
+			//	return nil
+			//}
 
 			backup[bucketName] = list
 			return nil
