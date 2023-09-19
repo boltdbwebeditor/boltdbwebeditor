@@ -13,6 +13,8 @@ func Read(dbPath string, metadata bool) (data map[string]interface{}, err error)
 		Str("dbPath", dbPath).
 		Msg("read database")
 
+	data = make(map[string]interface{})
+
 	option := &bolt.Options{
 		Timeout:  1 * time.Second,
 		ReadOnly: true,
@@ -25,7 +27,7 @@ func Read(dbPath string, metadata bool) (data map[string]interface{}, err error)
 	defer conn.Close()
 
 	if metadata {
-		data[helpers.MetadataKey], err = helpers.ExportMetadata(conn)
+		data[helpers.MetadataKey], err = helpers.ReadMetadata(conn)
 		if err != nil {
 			return
 		}

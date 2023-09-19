@@ -20,9 +20,13 @@ func Create(dbPath string, data map[string]interface{}) (err error) {
 
 	err = db.Update(func(tx *bolt.Tx) (err error) {
 		for bucketName, bucketData := range data {
+			if bucketName == helpers.MetadataKey {
+				continue
+			}
+
 			b, err := tx.CreateBucketIfNotExists([]byte(bucketName))
 			if err != nil {
-				return
+				return err
 			}
 
 			log.Debug().Msgf("bucket name: %s", bucketName)
@@ -35,17 +39,22 @@ func Create(dbPath string, data map[string]interface{}) (err error) {
 			for key, value := range bucketData.(map[string]interface{}) {
 				v, err := helpers.MarshalObject(value)
 				if err != nil {
-					return
+					return err
 				}
 
 				err = b.Put([]byte(key), v)
 				if err != nil {
-					return
+					return err
 				}
 			}
 		}
 		return
 	})
+
+	err = helpers.WriteMetadata(db, data[helpers.MetadataKey].(map[string]interface{}))
+	if err != nil {
+		return
+	}
 
 	return
 }
