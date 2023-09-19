@@ -26,7 +26,16 @@ export function JsonEditor({Id, newEditor, closeEditor}) {
         }, []
     )
 
+
     return (
-        <VanillaJsonEditor {...{Id, refEditor, content: data, onChange, onRenderMenu}} />
+        <VanillaJsonEditor {...{
+            Id,
+            refEditor,
+            content: data,
+            onChange,
+            onRenderMenu,
+            escapeControlCharacters: true,
+            escapeUnicodeCharacters: true,
+        }} />
     );
 }
