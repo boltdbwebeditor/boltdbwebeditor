@@ -31,8 +31,8 @@ func Read(dbPath string, metadata bool) (data map[string]interface{}, err error)
 		}
 	}
 
-	err = conn.View(func(tx *bolt.Tx) error {
-		err = tx.ForEach(func(name []byte, bucket *bolt.Bucket) error {
+	err = conn.View(func(tx *bolt.Tx) (err error) {
+		err = tx.ForEach(func(name []byte, bucket *bolt.Bucket) (err error) {
 			bucketName := string(name)
 			cursor := bucket.Cursor()
 
