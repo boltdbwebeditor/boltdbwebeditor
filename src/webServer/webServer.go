@@ -37,7 +37,14 @@ func Start() {
 			c.Error(err)
 		}
 
-		err = boltdb.ExportJSON("./portainer.db", data, false)
+		tempDbPath := helpers.GenerateDbTmpFilePath()
+
+		err = boltdb.ExportJSON(tempDbPath, data)
+		if err != nil {
+			c.Error(err)
+		}
+
+		err = helpers.MoveFile(tempDbPath, dbPath)
 		if err != nil {
 			c.Error(err)
 		}
