@@ -1,22 +1,22 @@
 package webServer
 
 import (
+	"github.com/boltdbwebeditor/boltdbwebeditor/src/cli/flags"
+	"net/http"
+
 	"github.com/boltdbwebeditor/boltdbwebeditor/src/boltdb"
 	"github.com/boltdbwebeditor/boltdbwebeditor/src/helpers"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
-const dbPath = "/Users/cmeng/Work/devkit/data-ee/portainer.db"
-
-func Start() {
+func Start(flags *flags.Flags) {
 	router := gin.Default()
 
 	router.Use(static.Serve("/", static.LocalFile("/app/static", false)))
 
 	router.GET("/api/db", func(c *gin.Context) {
-		tempDbPath, err := helpers.CopyDbToTemp(dbPath)
+		tempDbPath, err := helpers.CopyDbToTemp(*(flags.DB))
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
@@ -51,7 +51,7 @@ func Start() {
 			c.Error(err)
 		}
 
-		err = helpers.MoveFile(tempDbPath, dbPath)
+		err = helpers.MoveFile(tempDbPath, *(flags.DB))
 		if err != nil {
 			c.Error(err)
 		}

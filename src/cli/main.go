@@ -1,7 +1,11 @@
 package main
 
-import "github.com/boltdbwebeditor/boltdbwebeditor/src/webServer"
+import (
+	"github.com/boltdbwebeditor/boltdbwebeditor/src/cli/flags"
+	"github.com/boltdbwebeditor/boltdbwebeditor/src/webServer"
+)
 
 func main() {
-	webServer.Start()
+	flags := flags.ParseFlags()
+	webServer.Start(flags)
 }
