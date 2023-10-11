@@ -13,7 +13,7 @@ export function useData() {
             setData(data)
             toast.success("Download database successfully")
         } catch (e) {
-            toast.error("Failed to download database")
+            toast.error(e.errorMsg || "Failed to download database")
         }
     }, [])
 

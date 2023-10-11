@@ -18,13 +18,20 @@ func Start() {
 	router.GET("/api/db", func(c *gin.Context) {
 		tempDbPath, err := helpers.CopyDbToTemp(dbPath)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			c.JSON(
+				http.StatusInternalServerError,
+				gin.H{"error": err, "errorMsg": err.Error()},
+			)
+			return
 		}
 
 		all, err := boltdb.Read(tempDbPath, true)
-
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			c.JSON(
+				http.StatusInternalServerError,
+				gin.H{"error": err, "errorMsg": err.Error()},
+			)
+			return
 		}
 
 		c.PureJSON(http.StatusOK, all)
