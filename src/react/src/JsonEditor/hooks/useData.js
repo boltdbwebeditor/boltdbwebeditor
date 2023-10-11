@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useState} from "react";
 import { toast } from 'react-toastify';
 
 import {restGetDb, restPostDb} from "rests/db";
@@ -26,10 +26,6 @@ export function useData() {
             toast.error("Failed to upload database")
         }
     }, [])
-
-    useEffect(() => {
-        getData()
-    }, []);
 
     return {data, setData, getData, postData};
 }
