@@ -1,16 +1,23 @@
-### BoltDB Web Editor
+## BoltDB Web Editor
 
-<!--
-**boltdbwebeditor/boltdbwebeditor** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+### Usage:
+```
+./boltdbwebeditor:
+  -db string
+        Bolt Database path (default "bolt.db")
+```
 
-Here are some ideas to get you started:
+### Example:
+`./boltdbwebeditor`
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+`./boltdbwebeditor -db=~/home/bolt.db`
+
+
+### Docker Usage:
+```
+docker run \
+-p 8080:8080 \
+-v ~/Work/devkit/data-ee/portainer.db:/data/bolt.db \
+boltdbwebeditor/boltdbwebeditor:dev \
+-db /data/bolt.db
+```
