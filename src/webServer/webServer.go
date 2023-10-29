@@ -15,7 +15,7 @@ func Start(flags *flags.Flags) {
 	router.Use(static.Serve("/", static.LocalFile("/app/static", false)))
 
 	router.GET("/api/db", func(c *gin.Context) {
-		tempDbPath, err := helpers.CopyDbToTemp(*(flags.DbPath))
+		data, err := boltdb.ForceRead(*(flags.DbPath), true)
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
@@ -24,16 +24,7 @@ func Start(flags *flags.Flags) {
 			return
 		}
 
-		all, err := boltdb.Read(tempDbPath, true)
-		if err != nil {
-			c.JSON(
-				http.StatusInternalServerError,
-				gin.H{"error": err, "errorMsg": err.Error()},
-			)
-			return
-		}
-
-		c.PureJSON(http.StatusOK, all)
+		c.PureJSON(http.StatusOK, data)
 	})
 
 	router.POST("/api/db", func(c *gin.Context) {
