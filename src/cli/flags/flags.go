@@ -3,13 +3,13 @@ package flags
 import "flag"
 
 type Flags struct {
-	DB *string
+	DbPath *string
 }
 
 func ParseFlags() *Flags {
 	flags := Flags{}
 
-	flags.DB = flag.String("db", "bolt.db", "Bolt Database path")
+	flags.DbPath = flag.String("db", "bolt.db", "Bolt Database path")
 
 	flag.Parse()
 

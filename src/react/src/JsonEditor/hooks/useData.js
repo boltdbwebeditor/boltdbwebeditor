@@ -1,7 +1,9 @@
 import {useCallback, useState} from "react";
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 import {restGetDb, restPostDb} from "rests/db";
+import {fileSelector} from "components/FileSelector/FileSelector";
+import {restPostDbFile} from "../../rests/dbFile";
 
 export function useData() {
     const [data, setData] = useState({json: {}})
@@ -27,5 +29,14 @@ export function useData() {
         }
     }, [])
 
-    return {data, setData, getData, postData};
+    const uploadDB = useCallback(async () => {
+        const file = await fileSelector()
+        if (file) {
+            try {
+                restPostDbFile(file)
+            }
+        }
+    })
+
+    return {data, setData, getData, postData, uploadDB};
 }

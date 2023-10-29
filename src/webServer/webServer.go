@@ -1,13 +1,12 @@
 package webServer
 
 import (
-	"github.com/boltdbwebeditor/boltdbwebeditor/src/cli/flags"
-	"net/http"
-
 	"github.com/boltdbwebeditor/boltdbwebeditor/src/boltdb"
+	"github.com/boltdbwebeditor/boltdbwebeditor/src/cli/flags"
 	"github.com/boltdbwebeditor/boltdbwebeditor/src/helpers"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func Start(flags *flags.Flags) {
@@ -16,7 +15,7 @@ func Start(flags *flags.Flags) {
 	router.Use(static.Serve("/", static.LocalFile("/app/static", false)))
 
 	router.GET("/api/db", func(c *gin.Context) {
-		tempDbPath, err := helpers.CopyDbToTemp(*(flags.DB))
+		tempDbPath, err := helpers.CopyDbToTemp(*(flags.DbPath))
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
@@ -51,12 +50,25 @@ func Start(flags *flags.Flags) {
 			c.Error(err)
 		}
 
-		err = helpers.MoveFile(tempDbPath, *(flags.DB))
+		err = helpers.MoveFile(tempDbPath, *(flags.DbPath))
 		if err != nil {
 			c.Error(err)
+			return
 		}
 
 		c.PureJSON(http.StatusOK, data)
+	})
+
+	router.POST("/api/db/file", func(c *gin.Context) {
+		file, _ := c.FormFile("upload.bolt.db")
+
+		err := c.SaveUploadedFile(file, *(flags.DbPath))
+		if err != nil {
+			c.Error(err)
+			return
+		}
+
+		c.PureJSON(http.StatusOK, gin.H{})
 	})
 
 	router.Run(":8080")

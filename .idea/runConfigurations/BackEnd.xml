@@ -3,6 +3,7 @@
     <module name="boltdbwebeditor" />
     <working_directory value="$PROJECT_DIR$/build" />
     <go_parameters value="-o $PROJECT_DIR$/build/boltdbwebeditor" />
+    <parameters value="-db /tmp/bolt.db" />
     <kind value="DIRECTORY" />
     <package value="github.com/boltdbwebeditor/boltdbwebeditor/build" />
     <directory value="$PROJECT_DIR$/src/cli" />

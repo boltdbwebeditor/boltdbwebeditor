@@ -1,8 +1,33 @@
-import {faClose, faDownload, faPlus, faUpload} from "assets/icons";
+import {faClose, faDisk, faDownload, faRefresh, faSplit, faUpload} from "assets/icons";
 import {toJSONContent} from "vanilla-jsoneditor";
 
-export const renderMenuFactory = ({getData, postData, Id, newEditor, closeEditor, editor}) => (items, context) => {
+export const renderMenuFactory = ({getData, postData, uploadDB, Id, newEditor, closeEditor, editor}) => (items, context) => {
     const separator = {type: 'separator'}
+
+    const splitViewButton = {
+        type: "button",
+        icon: faSplit,
+        title: "Split View",
+        onClick: () => {
+            newEditor(Id)
+        },
+    }
+
+    const closeViewButton = {
+        type: "button",
+        icon: faClose,
+        title: "Close View",
+        onClick: () => {
+            closeEditor(Id)
+        },
+    }
+
+    const uploadButton = {
+        type: "button",
+        icon: faUpload,
+        title: "Upload",
+        onClick: uploadDB,
+    }
 
     const downloadButton = {
         type: "button",
@@ -11,10 +36,10 @@ export const renderMenuFactory = ({getData, postData, Id, newEditor, closeEditor
         onClick: getData,
     }
 
-    const uploadButton = {
+    const saveButton = {
         type: "button",
-        icon: faUpload,
-        title: "Upload",
+        icon: faDisk,
+        title: "Save",
         onClick: () => {
             try {
                 const isValid = editor.validate() === null
@@ -25,23 +50,17 @@ export const renderMenuFactory = ({getData, postData, Id, newEditor, closeEditor
         },
     }
 
-    const newEditorButton = {
+    const reloadButton = {
         type: "button",
-        icon: faPlus,
-        title: "New Editor",
-        onClick: () => {
-            newEditor(Id)
-        },
+        icon: faRefresh,
+        title: "Reload",
+        onClick: getData,
     }
 
-    const closeEditorButton = {
-        type: "button",
-        icon: faClose,
-        title: "Close Editor",
-        onClick: () => {
-            closeEditor(Id)
-        },
-    }
-
-    return [newEditorButton, closeEditorButton, separator, downloadButton, uploadButton, separator, ...items]
+    return [
+        splitViewButton, closeViewButton, separator,
+        uploadButton, downloadButton, separator,
+        saveButton, reloadButton, separator,
+        ...items
+    ]
 }

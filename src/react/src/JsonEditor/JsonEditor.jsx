@@ -9,11 +9,12 @@ import "./css/override-jse.css";
 export function JsonEditor({Id, newEditor, closeEditor}) {
     const refEditor = useRef(null)
 
-    const {data, setData, getData, postData} = useData()
+    const {data, setData, getData, postData, uploadDB} = useData()
 
     const onRenderMenu = renderMenuFactory({
         getData,
         postData,
+        uploadDB,
         Id,
         newEditor,
         closeEditor,
