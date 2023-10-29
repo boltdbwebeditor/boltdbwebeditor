@@ -1,7 +1,7 @@
 package boltdb
 
 import (
-	"github.com/boltdbwebeditor/boltdbwebeditor/src/boltdb/helpers"
+	helpers "github.com/boltdbwebeditor/boltdbwebeditor/src/libs/boltdb/helpers"
 	"github.com/rs/zerolog/log"
 	bolt "go.etcd.io/bbolt"
 )
