@@ -37,29 +37,6 @@ export function FileSelector({onClose}) {
 
     const onOk = () => onClose(file)
     const onCancel = () => onClose(null)
-    // {
-    //     if (file) {
-    //         // Create a new FormData object
-    //         const formData = new FormData();
-    //         formData.append('file', file);
-    //
-    //         // Make the API request
-    //         fetch('/api/db/upload', {
-    //             method: 'POST',
-    //             body: formData,
-    //         })
-    //             .then((response) => response.json())
-    //             .then((data) => {
-    //                 // Handle the response from the server
-    //                 console.log("=====", data);
-    //                 // props.onClose();
-    //             })
-    //             .catch((error) => {
-    //                 // Handle any errors
-    //                 console.error(error);
-    //             });
-    //     }
-    // };
 
     return (
         <div>
