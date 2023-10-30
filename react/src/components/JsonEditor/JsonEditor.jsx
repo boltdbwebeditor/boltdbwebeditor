@@ -1,4 +1,4 @@
-import {useCallback, useRef} from "react";
+import {useCallback, useEffect, useRef} from "react";
 
 import {VanillaJsonEditor} from "./VanillaJsonEditor/VanillaJsonEditor";
 import {useData} from "./hooks/useData";
@@ -28,6 +28,9 @@ export function JsonEditor({Id, newEditor, closeEditor}) {
         }, []
     )
 
+    useEffect(() => {
+        getData()
+    }, []);
 
     return (
         <VanillaJsonEditor {...{
