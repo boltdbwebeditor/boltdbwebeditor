@@ -1,4 +1,4 @@
-import {JsonEditor} from "JsonEditor/JsonEditor.jsx";
+import {JsonEditor} from "components/JsonEditor/JsonEditor.jsx";
 
 import {useJsonEditorManager} from "./hooks/useJsonEditorManager";
 

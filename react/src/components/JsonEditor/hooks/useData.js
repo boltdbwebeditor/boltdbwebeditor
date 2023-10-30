@@ -4,7 +4,7 @@ import { saveAs } from 'file-saver';
 
 import {fileSelector} from "components/FileSelector/FileSelector";
 import {restDbJsonGet, restDbJsonPost} from "rests/dbJson";
-import {resetDbFileGet, restDbFilePost} from "../../rests/dbFile";
+import {resetDbFileGet, restDbFilePost} from "../../../rests/dbFile";
 
 export function useData() {
     const [data, setData] = useState({json: {}})

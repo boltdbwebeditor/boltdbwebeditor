@@ -1,4 +1,4 @@
-import {JsonEditorManager} from "./JsonEditorManager/JsonEditorManager";
+import {JsonEditorManager} from "./components/JsonEditorManager/JsonEditorManager";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
