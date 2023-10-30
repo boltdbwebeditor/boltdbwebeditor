@@ -1,7 +1,7 @@
 package boltdb
 
 import (
-	"github.com/boltdbwebeditor/boltdbwebeditor/src/helpers"
+	"github.com/boltdbwebeditor/boltdbwebeditor/api/helpers"
 )
 
 func ForceRead(dbPath string, metadata bool) (data map[string]interface{}, err error) {

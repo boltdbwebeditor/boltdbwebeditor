@@ -6,7 +6,7 @@
     <parameters value="-db /tmp/bolt.db" />
     <kind value="DIRECTORY" />
     <package value="github.com/boltdbwebeditor/boltdbwebeditor/build" />
-    <directory value="$PROJECT_DIR$/src/cli" />
+    <directory value="$PROJECT_DIR$/api/cli" />
     <filePath value="$PROJECT_DIR$" />
     <output_directory value="$PROJECT_DIR$/build" />
     <method v="2" />

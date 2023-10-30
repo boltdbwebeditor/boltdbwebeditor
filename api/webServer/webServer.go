@@ -1,9 +1,9 @@
 package webServer
 
 import (
-	"github.com/boltdbwebeditor/boltdbwebeditor/src/cli/flags"
-	"github.com/boltdbwebeditor/boltdbwebeditor/src/helpers"
-	"github.com/boltdbwebeditor/boltdbwebeditor/src/libs/boltdb"
+	"github.com/boltdbwebeditor/boltdbwebeditor/api/cli/flags"
+	"github.com/boltdbwebeditor/boltdbwebeditor/api/helpers"
+	"github.com/boltdbwebeditor/boltdbwebeditor/api/libs/boltdb"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"io"
