@@ -10,12 +10,14 @@ import (
 )
 
 func Start(flags *flags.Flags) {
+	dbPath := *(flags.DbPath)
+
 	router := gin.Default()
 
 	router.Use(static.Serve("/", static.LocalFile("/app/static", false)))
 
 	router.GET("/api/db", func(c *gin.Context) {
-		data, err := boltdb.ForceRead(*(flags.DbPath), true)
+		data, err := boltdb.ForceRead(dbPath, true)
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
@@ -41,7 +43,7 @@ func Start(flags *flags.Flags) {
 			c.Error(err)
 		}
 
-		err = helpers.MoveFile(tempDbPath, *(flags.DbPath))
+		err = helpers.MoveFile(tempDbPath, dbPath)
 		if err != nil {
 			c.Error(err)
 			return
@@ -51,15 +53,28 @@ func Start(flags *flags.Flags) {
 	})
 
 	router.POST("/api/db/file", func(c *gin.Context) {
-		file, _ := c.FormFile("upload.bolt.db")
-
-		err := c.SaveUploadedFile(file, *(flags.DbPath))
+		file, err := c.FormFile("upload.bolt.db")
 		if err != nil {
 			c.Error(err)
 			return
 		}
 
-		c.PureJSON(http.StatusOK, gin.H{})
+		err = c.SaveUploadedFile(file, dbPath)
+		if err != nil {
+			c.Error(err)
+			return
+		}
+
+		data, err := boltdb.ForceRead(dbPath, true)
+		if err != nil {
+			c.JSON(
+				http.StatusInternalServerError,
+				gin.H{"error": err, "errorMsg": err.Error()},
+			)
+			return
+		}
+
+		c.PureJSON(http.StatusOK, gin.H{"data": data})
 	})
 
 	router.Run(":8080")

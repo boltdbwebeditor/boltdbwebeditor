@@ -33,7 +33,10 @@ export function useData() {
         const file = await fileSelector()
         if (file) {
             try {
-                restPostDbFile(file)
+                const payload = await restPostDbFile(file)
+                setData({json: payload.data})
+            } catch (e) {
+
             }
         }
     })
