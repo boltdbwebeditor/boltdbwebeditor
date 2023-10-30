@@ -6,7 +6,10 @@ import (
 	"github.com/boltdbwebeditor/boltdbwebeditor/src/libs/boltdb"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
+	"io"
 	"net/http"
+	"os"
+	"path/filepath"
 )
 
 func Start(flags *flags.Flags) {
@@ -75,6 +78,25 @@ func Start(flags *flags.Flags) {
 		}
 
 		c.PureJSON(http.StatusOK, gin.H{"data": data})
+	})
+
+	router.GET("/api/db/file", func(c *gin.Context) {
+		file, err := os.Open(dbPath)
+		if err != nil {
+			c.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+		defer file.Close()
+
+		fileContents, err := io.ReadAll(file)
+		if err != nil {
+			c.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+
+		c.Header("Content-Disposition", "attachment; filename="+filepath.Base(dbPath))
+		c.Header("Content-Type", "application/octet-stream")
+		c.Data(http.StatusOK, "application/octet-stream", fileContents)
 	})
 
 	router.Run(":8080")

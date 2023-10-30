@@ -1,7 +1,7 @@
 import {faClose, faDisk, faDownload, faRefresh, faSplit, faUpload} from "assets/icons";
 import {toJSONContent} from "vanilla-jsoneditor";
 
-export const renderMenuFactory = ({getData, postData, uploadDB, Id, newEditor, closeEditor, editor}) => (items, context) => {
+export const renderMenuFactory = ({getData, postData, uploadDB, downloadDb, Id, newEditor, closeEditor, editor}) => (items, context) => {
     const separator = {type: 'separator'}
 
     const splitViewButton = {
@@ -23,7 +23,7 @@ export const renderMenuFactory = ({getData, postData, uploadDB, Id, newEditor, c
     }
 
     const uploadButton = {
-        type: "button",
+        type: "file",
         icon: faUpload,
         title: "Upload",
         onClick: uploadDB,
@@ -33,7 +33,7 @@ export const renderMenuFactory = ({getData, postData, uploadDB, Id, newEditor, c
         type: "button",
         icon: faDownload,
         title: "Download",
-        onClick: getData,
+        onClick: downloadDb,
     }
 
     const saveButton = {

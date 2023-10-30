@@ -1,9 +1,10 @@
 import {useCallback, useState} from "react";
 import {toast} from 'react-toastify';
+import { saveAs } from 'file-saver';
 
 import {restGetDb, restPostDb} from "rests/db";
 import {fileSelector} from "components/FileSelector/FileSelector";
-import {restPostDbFile} from "../../rests/dbFile";
+import {resetDbFileGet, restGetDbFile, restPostDbFile} from "../../rests/dbFile";
 
 export function useData() {
     const [data, setData] = useState({json: {}})
@@ -41,5 +42,10 @@ export function useData() {
         }
     })
 
-    return {data, setData, getData, postData, uploadDB};
+    const downloadDb = useCallback(async () => {
+        const {blob, filename} = await resetDbFileGet()
+        saveAs(blob, filename)
+    })
+
+    return {data, setData, getData, postData, uploadDB, downloadDb};
 }

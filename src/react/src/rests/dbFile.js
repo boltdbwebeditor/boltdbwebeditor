@@ -35,3 +35,12 @@ export async function restPostDbFile(file) {
 
     return await resp.json()
 }
+
+export async function resetDbFileGet() {
+    const resp = await fetch("/api/db/file")
+    const blob = await resp.blob()
+
+    const filename = resp.headers.get('Content-Disposition').replace('attachment; filename=', '')
+
+    return {blob, filename}
+}
