@@ -11,8 +11,8 @@ function NormalizeError(respJson) {
 }
 
 
-export async function restGetDb() {
-        const resp = await fetch("/api/db")
+export async function restDbJsonGet() {
+        const resp = await fetch("/api/db/json")
         const respJson = await resp.json()
 
         if (!resp.ok) {
@@ -22,7 +22,7 @@ export async function restGetDb() {
         return respJson
 }
 
-export async function restPostDb(db) {
+export async function restDbJsonPost(db) {
     const options = {
         method: 'POST',
         headers: {
@@ -32,7 +32,7 @@ export async function restPostDb(db) {
         body: JSON.stringify(db)
     }
 
-    const resp = await fetch("/api/db", options)
+    const resp = await fetch("/api/db/json", options)
 
     return await resp.json()
 }

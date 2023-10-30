@@ -19,7 +19,7 @@ func Start(flags *flags.Flags) {
 
 	router.Use(static.Serve("/", static.LocalFile("/app/static", false)))
 
-	router.GET("/api/db", func(c *gin.Context) {
+	router.GET("/api/db/json", func(c *gin.Context) {
 		data, err := boltdb.ForceRead(dbPath, true)
 		if err != nil {
 			c.JSON(
@@ -32,7 +32,7 @@ func Start(flags *flags.Flags) {
 		c.PureJSON(http.StatusOK, data)
 	})
 
-	router.POST("/api/db", func(c *gin.Context) {
+	router.POST("/api/db/json", func(c *gin.Context) {
 		var data map[string]interface{}
 		err := c.BindJSON(&data)
 		if err != nil {
