@@ -2,8 +2,8 @@ package webServer
 
 import (
 	"github.com/boltdbwebeditor/boltdbwebeditor/api/cli/flags"
-	"github.com/boltdbwebeditor/boltdbwebeditor/api/helpers"
 	"github.com/boltdbwebeditor/boltdbwebeditor/api/libs/boltdb"
+	"github.com/boltdbwebeditor/boltdbwebeditor/api/libs/tempFile"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"io"
@@ -39,14 +39,14 @@ func Start(flags *flags.Flags) {
 			c.Error(err)
 		}
 
-		tempDbPath := helpers.GenerateDbTmpFilePath()
+		tempDbPath := tempFile.GenerateDbTmpFilePath()
 
 		err = boltdb.Create(tempDbPath, data)
 		if err != nil {
 			c.Error(err)
 		}
 
-		err = helpers.MoveFile(tempDbPath, dbPath)
+		err = tempFile.MoveFile(tempDbPath, dbPath)
 		if err != nil {
 			c.Error(err)
 			return
